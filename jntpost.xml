@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Training Jualan & Demo</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f4f6f9;
+            color: #333;
+            padding: 15px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+            padding: 10px 0;
+        }
+
+        .header h1 {
+            font-size: 1.5rem;
+            color: #1e293b;
+        }
+
+        .card {
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .card h2 {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            color: #0f172a;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 8px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+            color: #475569;
+        }
+
+        input[type="text"],
+        input[type="tel"],
+        textarea {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        input[type="text"]:focus,
+        input[type="tel"]:focus,
+        textarea:focus {
+            border-color: #2563eb;
+        }
+
+        input[readonly] {
+            background-color: #f1f5f9;
+            font-weight: bold;
+            color: #2563eb;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 70px;
+        }
+
+        .file-input-container {
+            border: 2px dashed #cbd5e1;
+            padding: 15px;
+            text-align: center;
+            border-radius: 8px;
+            background: #fafafa;
+            cursor: pointer;
+        }
+
+        .file-input-container input[type="file"] {
+            display: none;
+        }
+
+        .preview-img {
+            max-width: 100%;
+            max-height: 150px;
+            border-radius: 8px;
+            margin-top: 10px;
+            display: none;
+            object-fit: cover;
+        }
+
+        .btn {
+            display: inline-block;
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background-color: #2563eb;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #1d4ed8;
+        }
+
+        .btn-success {
+            background-color: #10b981;
+            color: white;
+            margin-bottom: 15px;
+        }
+
+        .btn-success:hover {
+            background-color: #059669;
+        }
+
+        .btn-danger {
+            background-color: #ef4444;
+            color: white;
+            padding: 6px 10px;
+            font-size: 0.8rem;
+            width: auto;
+            border-radius: 6px;
+        }
+
+        .btn-danger:hover {
+            background-color: #dc2626;
+        }
+
+        .data-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .data-item {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            padding: 12px;
+            border-radius: 8px;
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+        }
+
+        .data-item img {
+            width: 70px;
+            height: 70px;
+            object-fit: cover;
+            border-radius: 6px;
+            background-color: #e2e8f0;
+        }
+
+        .data-details {
+            flex: 1;
+            font-size: 0.85rem;
+        }
+
+        .data-details strong {
+            display: block;
+            font-size: 0.95rem;
+            color: #0f172a;
+        }
+
+        .data-details .sn {
+            color: #2563eb;
+            font-weight: 600;
+        }
+
+        .empty-state {
+            text-align: center;
+            color: #94a3b8;
+            padding: 20px 0;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>📊 Dashboard Demo Sales</h1>
+    </div>
+
+    <!-- Form Input Data -->
+    <div class="card">
+        <h2>🏷️ Input Data Pelanggan</h2>
+        <form id="demoForm">
+            <div class="form-group">
+                <label>Nomor Seri (Otomatis)</label>
+                <input type="text" id="nomorSeri" readonly>
+            </div>
+
+            <div class="form-group">
+                <label for="nama">Nama Lengkap</label>
+                <input type="text" id="nama" placeholder="Masukkan nama" required>
+            </div>
+
+            <div class="form-group">
+                <label for="alamat">Alamat</label>
+                <textarea id="alamat" placeholder="Masukkan alamat lengkap" required></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="nomorHP">Nomor HP</label>
+                <input type="tel" id="nomorHP" placeholder="08xxxxxxxxxx" required>
+            </div>
+
+            <div class="form-group">
+                <label>Upload Foto</label>
+                <div class="file-input-container" onclick="document.getElementById('fotoInput').click()">
+                    <span>🖼️ Klik/Tap untuk Upload Foto</span>
+                    <input type="file" id="fotoInput" accept="image/*" onchange="previewImage(event)">
+                    <br>
+                    <img id="preview" class="preview-img" alt="Preview Foto">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="catatan">Catatan</label>
+                <textarea id="catatan" placeholder="Catatan tambahan (opsional)"></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary">💾 Simpan Data</button>
+        </form>
+    </div>
+
+    <!-- Daftar Data -->
+    <div class="card">
+        <h2>📋 Daftar Data Demo</h2>
+        <button class="btn btn-success" onclick="exportToCSV()">📥 Export ke CSV</button>
+        
+        <div id="dataContainer" class="data-list">
+            <div class="empty-state">Belum ada data tersimpan.</div>
+        </div>
+    </div>
+
+    <script>
+        let currentFotoBase64 = "";
+
+        // Generate Nomor Seri Otomatis (Format: SN-YYYYMMDD-XXXX)
+        function generateNomorSeri() {
+            const now = new Date();
+            const dateStr = now.toISOString().slice(0,10).replace(/-/g,"");
+            const randomNum = Math.floor(1000 + Math.random() * 9000);
+            document.getElementById('nomorSeri').value = `SN-${dateStr}-${randomNum}`;
+        }
+
+        // Preview Foto saat dipilih
+        function previewImage(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const preview = document.getElementById('preview');
+                    preview.src = e.target.result;
+                    preview.style.display = 'block';
+                    currentFotoBase64 = e.target.result;
+                }
+                reader.readAsDataURL(file);
+            }
+        }
+
+        // Ambil Data dari LocalStorage
+        function getStoredData() {
+            return JSON.parse(localStorage.getItem('demoSalesData')) || [];
+        }
+
+        // Render Daftar Data ke Tampilan
+        function renderData() {
+            const dataList = getStoredData();
+            const container = document.getElementById('dataContainer');
+
+            if (dataList.length === 0) {
+                container.innerHTML = '<div class="empty-state">Belum ada data tersimpan.</div>';
+                return;
+            }
+
+            container.innerHTML = '';
+            dataList.forEach((item, index) => {
+                const itemEl = document.createElement('div');
+                itemEl.className = 'data-item';
+                
+                const photoSrc = item.foto || 'https://via.placeholder.com/70?text=No+Img';
+                
+                itemEl.innerHTML = `
+                    <img src="${photoSrc}" alt="Foto ${item.nama}">
+                    <div class="data-details">
+                        <span class="sn">${item.nomorSeri}</span>
+                        <strong>${item.nama}</strong>
+                        <p>📱 ${item.nomorHP}</p>
+                        <p>📍 ${item.alamat}</p>
+                        ${item.catatan ? `<p>📝 <i>${item.catatan}</i></p>` : ''}
+                    </div>
+                    <button class="btn-danger" onclick="deleteData(${index})">🗑️ Hapus</button>
+                `;
+                container.appendChild(itemEl);
+            });
+        }
+
+        // Simpan Data Form
+        document.getElementById('demoForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const newData = {
+                nomorSeri: document.getElementById('nomorSeri').value,
+                nama: document.getElementById('nama').value,
+                alamat: document.getElementById('alamat').value,
+                nomorHP: document.getElementById('nomorHP').value,
+                catatan: document.getElementById('catatan').value,
+                foto: currentFotoBase64,
+                waktu: new Date().toLocaleString('id-ID')
+            };
+
+            const dataList = getStoredData();
+            dataList.unshift(newData); // Tambah ke paling atas
+            localStorage.setItem('demoSalesData', JSON.stringify(dataList));
+
+            // Reset Form
+            this.reset();
+            document.getElementById('preview').style.display = 'none';
+            currentFotoBase64 = "";
+            generateNomorSeri();
+            renderData();
+
+            alert('Data berhasil disimpan!');
+        });
+
+        // Hapus Data per baris
+        function deleteData(index) {
+            if (confirm('Apakah Anda yakin ingin menghapus data ini?')) {
+                const dataList = getStoredData();
+                dataList.splice(index, 1);
+                localStorage.setItem('demoSalesData', JSON.stringify(dataList));
+                renderData();
+            }
+        }
+
+        // Export Data ke File CSV
+        function exportToCSV() {
+            const dataList = getStoredData();
+            if (dataList.length === 0) {
+                alert('Tidak ada data untuk diexport!');
+                return;
+            }
+
+            let csvContent = "data:text/csv;charset=utf-8,";
+            csvContent += "Nomor Seri,Nama,Alamat,Nomor HP,Catatan,Waktu Input\n";
+
+            dataList.forEach(item => {
+                const row = [
+                    `"${item.nomorSeri}"`,
+                    `"${item.nama}"`,
+                    `"${item.alamat.replace(/\n/g, ' ')}"`,
+                    `"${item.nomorHP}"`,
+                    `"${item.catatan ? item.catatan.replace(/\n/g, ' ') : ''}"`,
+                    `"${item.waktu}"`
+                ].join(",");
+                csvContent += row + "\n";
+            });
+
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", `Data_Demo_Sales_${new Date().toISOString().slice(0,10)}.csv`);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        // Inisialisasi awal saat halaman dimuat
+        window.onload = function() {
+            generateNomorSeri();
+            renderData();
+        };
+    </script>
+</body>
+</html>
