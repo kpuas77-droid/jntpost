@@ -110,6 +110,25 @@
             object-fit: cover;
         }
 
+        .qris-box {
+            text-align: center;
+            margin-top: 20px;
+            padding: 15px;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+        }
+
+        .qris-img {
+            max-width: 250px;
+            width: 100%;
+            border-radius: 8px;
+            border: 1px solid #cbd5e1;
+            padding: 5px;
+            background: white;
+            margin: 10px 0;
+        }
+
         .btn {
             display: inline-block;
             width: 100%;
@@ -121,6 +140,7 @@
             cursor: pointer;
             transition: background 0.2s;
             text-align: center;
+            margin-top: 10px;
         }
 
         .btn-primary {
@@ -248,6 +268,14 @@
                 <textarea id="catatan" placeholder="Catatan tambahan (opsional)"></textarea>
             </div>
 
+            <!-- BAGIAN QRIS PEMBAYARAN -->
+            <div class="qris-box">
+                <label>💳 Scan QRIS Pembayaran</label>
+                <br>
+                <img src="IMG_20260925_192651.jpg" alt="QRIS Pembayaran" class="qris-img">
+                <p style="font-size: 0.8rem; color: #64748b;">Silahkan scan QRIS untuk melakukan pembayaran.</p>
+            </div>
+
             <button type="submit" class="btn btn-primary">💾 Simpan Data</button>
         </form>
     </div>
@@ -265,7 +293,7 @@
     <script>
         let currentFotoBase64 = "";
 
-        // Generate Nomor Seri Otomatis (Format: SN-YYYYMMDD-XXXX)
+        // Generate Nomor Seri Otomatis
         function generateNomorSeri() {
             const now = new Date();
             const dateStr = now.toISOString().slice(0,10).replace(/-/g,"");
@@ -273,7 +301,7 @@
             document.getElementById('nomorSeri').value = `SN-${dateStr}-${randomNum}`;
         }
 
-        // Preview Foto saat dipilih
+        // Preview Foto
         function previewImage(event) {
             const file = event.target.files[0];
             if (file) {
@@ -293,7 +321,7 @@
             return JSON.parse(localStorage.getItem('demoSalesData')) || [];
         }
 
-        // Render Daftar Data ke Tampilan
+        // Render Daftar Data
         function renderData() {
             const dataList = getStoredData();
             const container = document.getElementById('dataContainer');
@@ -325,7 +353,7 @@
             });
         }
 
-        // Simpan Data Form
+        // Simpan Data
         document.getElementById('demoForm').addEventListener('submit', function(e) {
             e.preventDefault();
 
@@ -340,10 +368,9 @@
             };
 
             const dataList = getStoredData();
-            dataList.unshift(newData); // Tambah ke paling atas
+            dataList.unshift(newData);
             localStorage.setItem('demoSalesData', JSON.stringify(dataList));
 
-            // Reset Form
             this.reset();
             document.getElementById('preview').style.display = 'none';
             currentFotoBase64 = "";
@@ -353,7 +380,7 @@
             alert('Data berhasil disimpan!');
         });
 
-        // Hapus Data per baris
+        // Hapus Data
         function deleteData(index) {
             if (confirm('Apakah Anda yakin ingin menghapus data ini?')) {
                 const dataList = getStoredData();
@@ -363,7 +390,7 @@
             }
         }
 
-        // Export Data ke File CSV
+        // Export CSV
         function exportToCSV() {
             const dataList = getStoredData();
             if (dataList.length === 0) {
@@ -395,7 +422,6 @@
             document.body.removeChild(link);
         }
 
-        // Inisialisasi awal saat halaman dimuat
         window.onload = function() {
             generateNomorSeri();
             renderData();
